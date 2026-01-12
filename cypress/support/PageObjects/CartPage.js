@@ -1,9 +1,9 @@
-import CheckoutPage from "./CheckOutPage";
+import CheckOutPage from "./CheckOutPage";
 
 class CartPage {
   proceedToCheckout() {
     cy.contains("Checkout").click();
-    return new CheckoutPage();
+    return new CheckOutPage();
   }
 }
 

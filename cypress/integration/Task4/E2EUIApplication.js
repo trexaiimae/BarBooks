@@ -1,6 +1,6 @@
 import LoginPage from "../../support/PageObjects/LoginPage";
 
-describe("SauceDemo E2E Happy Path (POM)", () => {
+describe("SauceDemo E2E Order Flow Happy Path (POM)", () => {
   it("should login, sort, add to cart, checkout & confirm order", () => {
     const loginPage = new LoginPage();
 
@@ -12,7 +12,8 @@ describe("SauceDemo E2E Happy Path (POM)", () => {
     const cartPage = inventory.goToCart();
     const checkout = cartPage.proceedToCheckout();
     checkout.fillUserDetails();
+    checkout.verifyItemTotal();
     checkout.finishOrder();
     checkout.verifyOrderSuccess();
   });
-});
+}); 

@@ -1,9 +1,51 @@
+// cypress/support/PageObjects/CheckoutPage.js
+import { calculateCartTotal } from '../utils/cartCalculator';
+
 class CheckoutPage {
   fillUserDetails() {
     cy.get("#first-name").type(Cypress.env("firstName"));
     cy.get("#last-name").type(Cypress.env("lastName"));
     cy.get("#postal-code").type(Cypress.env("postalCode"));
     cy.get('[data-test="continue"]').click();
+  }
+
+  verifyItemTotal() {
+    let items = [];
+
+    // Get all prices and quantities from the checkout overview
+    cy.get('[data-test="inventory-item-price"]').each(($el) => {
+      const price = Number($el.text().replace(/[^0-9.]/g, ''));
+      items.push({ price, qty: 1 });
+    }).then(() => {
+      const calculatedTotal = calculateCartTotal(items);
+
+      // Get the displayed subtotal
+      cy.get('[data-test="subtotal-label"]')
+        .invoke('text')
+        .then((text) => {
+          const displayedTotal = Number(text.replace(/[^0-9.]/g, ''));
+          cy.log(`Calculated Item Total: ${calculatedTotal}`);
+          cy.log(`Displayed Item Total: ${displayedTotal}`);
+          expect(calculatedTotal).to.eq(displayedTotal);
+
+          // Also verify total after tax
+          cy.get('[data-test="tax-label"]')
+            .invoke('text')
+            .then((taxText) => {
+              const tax = Number(taxText.replace(/[^0-9.]/g, ''));
+              const expectedTotal = Math.round((calculatedTotal + tax) * 100) / 100;
+
+              cy.get('[data-test="total-label"]')
+                .invoke('text')
+                .then((totalText) => {
+                  const displayedTotalAfterTax = Number(totalText.replace(/[^0-9.]/g, ''));
+                  cy.log(`Expected Total (Item + Tax): ${expectedTotal}`);
+                  cy.log(`Displayed Total: ${displayedTotalAfterTax}`);
+                  expect(displayedTotalAfterTax).to.eq(expectedTotal);
+                });
+            });
+        });
+    });
   }
 
   finishOrder() {
@@ -16,4 +58,4 @@ class CheckoutPage {
   }
 }
 
-export default CheckoutPage;
+module.exports = CheckoutPage;

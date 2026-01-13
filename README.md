@@ -27,7 +27,7 @@ npm install --save-dev jest
 
 # TypeScript typings for Chai (optional, needed if using TypeScript + chai-json-schema)
 npm install --save-dev @types/chai
-
+```
 
 ##  Setup & Installation  
 

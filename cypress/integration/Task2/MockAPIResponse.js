@@ -1,50 +1,69 @@
-describe('Inventory Network Tests (Dynamic Login + Network Stubbing)', () => {
+import LoginPage from "../../support/PageObjects/LoginPage";
 
-  beforeEach(() => {
-    cy.fixture("products.json").as("productsData");
+describe("Task 2: Fixtures & Network Stubbing (SauceDemo)", () => {
+  const loginPage = new LoginPage();
+
+  beforeEach(function () {
+    cy.fixture("products.json").as("products");
+    loginPage.visit();
+    loginPage.login();
+    cy.url().should("include", "/inventory.html");
   });
 
+  it("Mocks inventory API with a successful JSON response", function () {
+    cy.intercept("GET", "**/api/inventory", {
+      statusCode: 200,
+      body: this.products.validProducts,
+    }).as("inventorySuccess");
 
+    // Trigger the fake API call (simulate frontend fetching)
+    cy.window().then((win) => {
+      win.fetch("/api/inventory");
 
-  it('Logs in dynamically and forces network error for inventory API', function () {
-
-    // Visit login page
-    cy.visit("https://www.saucedemo.com");
-
-    cy.get("#login_credentials").then($el => {
-      const usernamesText = $el.text().trim();
-      const usernames = usernamesText.split("\n").map(u => u.trim()).filter(u => u);
-
-      cy.get(".login_password").then($passEl => {
-        const password = $passEl.text().trim();
-
-        const username = usernames[0]; // use standard_user
-        cy.log("Logging in with:", username, password);
-
-        cy.get("#user-name").type(username);
-        cy.get("#password").type(password);
-        cy.get("#login-button").click();
-
-        cy.url().should("include", "/inventory.html");
-
-        // Stub inventory to simulate server error
-        cy.intercept("GET", "/inventory.json", {
-          statusCode: 500,
-          body: { error: "Internal Server Error" }
-        }).as("getInventoryFail");
-
-        cy.visit("/inventory.html");
-
-        cy.wait("@getInventoryFail").then(interception => {
-          expect(interception.response?.statusCode).to.eq(500);
-          expect(interception.response?.body.error).to.eq("Internal Server Error");
-        });
-
-      });
     });
 
+    cy.wait("@inventorySuccess").then((interception) => {
+    cy.log("Success response: " + JSON.stringify(interception.response.body));
+    expect(interception.response.statusCode).to.eq(200);
+    
+    });
   });
 
+it("Mocks inventory API with invalid products", function () {
+  cy.intercept("GET", "**/api/inventory-invalid", {
+    statusCode: 400,
+    body: this.products.invalidProducts,
+  }).as("inventoryInvalid");
+
+  cy.window().then((win) => {
+    win.fetch("/api/inventory-invalid");
+  });
+
+  cy.wait("@inventoryInvalid").then((interception) => {
+   cy.log("Invalid response: " + JSON.stringify(interception.response.body));
+    expect(interception.response.body).to.have.length(
+      this.products.invalidProducts.length
+      
+    );
+    expect(interception.response.statusCode).to.eq(400);
+  });
 });
 
-// to continue toms remaining
+
+  it("Mocks inventory API with a 500 server error", function () {
+    cy.intercept("GET", "**/api/inventory", {
+      statusCode: 500,
+      body: { error: "Internal Server Error" },
+    }).as("inventoryFail");
+
+    cy.window().then((win) => {
+      win.fetch("/api/inventory");
+    });
+
+    cy.wait("@inventoryFail").then((interception) => {
+      cy.log("500 error response: " + JSON.stringify(interception.response.body));
+      expect(interception.response.statusCode).to.eq(500);
+      expect(interception.response.body.error).to.eq("Internal Server Error");
+    });
+  });
+});

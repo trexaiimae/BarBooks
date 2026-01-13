@@ -30,6 +30,7 @@ npm install --save-dev jest
 git clone https://github.com/trexaiimae/BarBooks.git
 cd BarBooks
 ```
+
 **2. Install Node.js [(LTS version recommended]([url](https://nodejs.org/en)))**  
 - Make sure to select **“Add to PATH”** during installation (Windows). 
 ```bash

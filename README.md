@@ -59,6 +59,11 @@ npx cypress -v
 
 ▶️ Running the Tests
 
+**Run Task 1**  
+```bash
+npm run test:CartTotal
+```
+**Run Task 2-4** 
 **Option 1: Run via Cypress GUI**  
 **1: Open Cypress GUI**  
 ```bash

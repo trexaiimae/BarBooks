@@ -16,10 +16,75 @@ Check versions:
 ```bash
 node -v
 npm -v
+```
+## Optional Tools
+```bash
+npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator
+npm install --save-dev jest
+```
 
-##  Setup & Installation
 
-**1. Clone this repo**
+##  Setup & Installation  
+
+**1. Clone this repo** 
 ```bash
 git clone https://github.com/trexaiimae/BarBooks.git
 cd BarBooks
+```
+
+**2. Install Node.js [(LTS version recommended]([url](https://nodejs.org/en)))**  
+- Make sure to select **“Add to PATH”** during installation (Windows). 
+```bash
+node -v
+npm -v
+```
+
+**3. Install dependencies**  
+```bash
+npm install
+```
+**4. Install Cypress**  
+```bash
+npm install cypress
+```
+**5. Install TypeScript (optional)**  
+```bash
+npm install --save-dev typescript @types/node @types/cypress
+```
+
+**6. Verify Cypress installation**  
+```bash
+npx cypress -v
+```
+
+▶️ Running the Tests
+
+**Option 1: Run via Cypress GUI**  
+**1: Open Cypress GUI**  
+```bash
+npx cypress open
+```
+
+**2: Click on E2E testing**  
+**3: Choose your preferred browser.** 
+**4:Then select the spec you want to run in the cypress runner:
+➡️MockAPIResponse.js
+➡️APITestingHeadless.js
+➡️E2EUIApplication.js
+
+
+
+**Option 2: Run directly in CLI (headless mode)**  
+```bash
+# Run all Test
+npm run runall
+
+# Run MOckAPIResponse
+npm run mockAPI
+
+# E2EApplication
+npm run E2Etest
+
+```
+
+

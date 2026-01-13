@@ -13,7 +13,9 @@
     "chromeTest": "npx cypress run --browser chrome",
     "recordDashboardTest": "npx cypress run --record --key 67cfa6a8-8af2-4c42-a9f7-92ce21063f8a --spec \"cypress/integration/*.js\"  --browser chrome",
     "test:CartTotal": "jest --config jest.config.js",
-    "apiHeadless": "npx cypress run --spec \"cypress/integration/Task3/APITestingHeadless.js\""
+    "mockAPI": "npx cypress run --spec \"cypress/integration/Task2/MockAPIResponse.js\"",
+    "apiHeadless": "npx cypress run --spec \"cypress/integration/Task3/APITestingHeadless.js\"",
+    "E2Etest": "npx cypress run --spec \"cypress/integration/Task4/E2EUIApplication.js\""
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",

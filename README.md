@@ -17,6 +17,12 @@ Check versions:
 node -v
 npm -v
 
+### Optional Tools
+
+- **Jest**: For API / utility tests outside Cypress  
+- **Mochawesome**: For HTML reports of Cypress runs  
+- **TypeScript**: Only if you plan to convert `.js` tests to `.ts`
+
 ##  Setup & Installation  
 
 **1. Clone this repo** 
@@ -35,6 +41,7 @@ npm -v
 **3. Install dependencies**  
 ```bash
 npm install
+npm install cypress
 ```
 **4. Install dependencies**  
 ```bash

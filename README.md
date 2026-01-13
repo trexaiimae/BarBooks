@@ -17,11 +17,16 @@ Check versions:
 node -v
 npm -v
 ```
-## Optional Tools
+## Install Tools
 ```bash
+# Mochawesome for Cypress HTML reports
 npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator
+
+# Jest for API / utility tests
 npm install --save-dev jest
-```
+
+# TypeScript typings for Chai (optional, needed if using TypeScript + chai-json-schema)
+npm install --save-dev @types/chai
 
 
 ##  Setup & Installation  

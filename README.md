@@ -43,21 +43,16 @@ cd BarBooks
 node -v
 npm -v
 ```
-
-**3. Install dependencies**  
-```bash
-npm install
-```
-**4. Install Cypress**  
+**3. Install Cypress**  
 ```bash
 npm install cypress
 ```
-**5. Install TypeScript (optional)**  
+**4. Install TypeScript (optional)**  
 ```bash
 npm install --save-dev typescript @types/node @types/cypress
 ```
 
-**6. Verify Cypress installation**  
+**5. Verify Cypress installation**  
 ```bash
 npx cypress -v
 ```

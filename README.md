@@ -71,11 +71,12 @@ npx cypress open
 ```
 
 **2: Click on E2E testing**  
-**3: Choose your preferred browser.** 
-**4:Then select the spec you want to run in the cypress runner:
-➡️MockAPIResponse.js
-➡️APITestingHeadless.js
-➡️E2EUIApplication.js
+**3: Choose your preferred browser.**  
+
+**4: Then select the spec you want to run in the Cypress runner:**  
+➡️ MockAPIResponse.js  
+➡️ APITestingHeadless.js  
+➡️ E2EUIApplication.js
 
 
 

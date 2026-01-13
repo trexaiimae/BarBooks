@@ -18,10 +18,11 @@ node -v
 npm -v
 
 ### Optional Tools
+```bash
+npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator
+npm install --save-dev jest
 
-- **Jest**: For API / utility tests outside Cypress  
-- **Mochawesome**: For HTML reports of Cypress runs  
-- **TypeScript**: Only if you plan to convert `.js` tests to `.ts`
+
 
 ##  Setup & Installation  
 
@@ -42,13 +43,18 @@ npm -v
 ```bash
 npm install
 npm install cypress
+
 ```
-**4. Install dependencies**  
+**4. Install Cypress**  
 ```bash
 npm install cypress
 ```
+**5. Install TypeScript (optional)**  
+```bash
+npm install --save-dev typescript @types/node @types/cypress
+```
 
-**5. Verify Cypress installation**  
+**6. Verify Cypress installation**  
 ```bash
 npx cypress -v
 ```

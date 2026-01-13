@@ -17,8 +17,7 @@ Check versions:
 node -v
 npm -v
 
-### Optional Tools
-```bash
+## Optional Tools
 npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator
 npm install --save-dev jest
 

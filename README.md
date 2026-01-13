@@ -17,9 +17,59 @@ Check versions:
 node -v
 npm -v
 
-##  Setup & Installation
+##  Setup & Installation  
 
-**1. Clone this repo**
+**1. Clone this repo** 
+```bash
 ```bash
 git clone https://github.com/trexaiimae/BarBooks.git
 cd BarBooks
+```
+**2. Install Node.js [(LTS version recommended]([url](https://nodejs.org/en)))**  
+- Make sure to select **“Add to PATH”** during installation (Windows). 
+```bash
+node -v
+npm -v
+```
+
+**3. Install dependencies**  
+```bash
+npm install
+```
+**4. Install dependencies**  
+```bash
+npm install cypress
+```
+
+**5. Verify Cypress installation**  
+```bash
+npx cypress -v
+```
+
+▶️ Running the Tests
+
+**Option 1: Run via Cypress GUI**  
+```bash
+npx cypress open
+```
+Then select the spec you want to run:
+Example:
+➡️MockAPIResponse.js
+➡️APITestingHeadless.js
+➡️E2EUIApplication.js
+
+
+**Option 2: Run directly in CLI (headless mode)**  
+```bash
+# Run all Test
+npm run runall
+
+# Run MOckAPIResponse
+npm run mockAPI
+
+# E2EApplication
+npm run E2Etest
+
+```
+
+

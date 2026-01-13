@@ -27,7 +27,6 @@ npm install --save-dev jest
 
 **1. Clone this repo** 
 ```bash
-```bash
 git clone https://github.com/trexaiimae/BarBooks.git
 cd BarBooks
 ```

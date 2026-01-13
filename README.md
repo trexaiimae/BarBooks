@@ -49,14 +49,18 @@ npx cypress -v
 ▶️ Running the Tests
 
 **Option 1: Run via Cypress GUI**  
+**1: Open Cypress GUI**  
 ```bash
 npx cypress open
 ```
-Then select the spec you want to run:
-Example:
+
+**2: Click on E2E testing**  
+**3: Choose your preferred browser.** 
+**4:Then select the spec you want to run in the cypress runner:
 ➡️MockAPIResponse.js
 ➡️APITestingHeadless.js
 ➡️E2EUIApplication.js
+
 
 
 **Option 2: Run directly in CLI (headless mode)**  

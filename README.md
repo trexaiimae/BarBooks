@@ -37,17 +37,14 @@ git clone https://github.com/trexaiimae/BarBooks.git
 cd BarBooks
 ```
 
-**2. Install Node.js [(LTS version recommended]([url](https://nodejs.org/en)))**  
-- Make sure to select **“Add to PATH”** during installation (Windows). 
-```bash
-node -v
-npm -v
-```
+**2. Install Node.js (LTS version recommended)**  
+[Download Node.js](https://nodejs.org/en/)
+
 **3. Install Cypress**  
 ```bash
 npm install cypress
 ```
-**4. Install TypeScript (optional)**  
+**4. Install TypeScript **  
 ```bash
 npm install --save-dev typescript @types/node @types/cypress
 ```
@@ -59,7 +56,7 @@ npx cypress -v
 
 ▶️ Running the Tests
 
-**Run Task 1**  
+**Run Task 1 in Command Terminal**  
 ```bash
 npm run test:CartTotal
 ```
@@ -85,7 +82,7 @@ npx cypress open
 # Run all Test
 npm run runall
 
-# Run MOckAPIResponse
+# Run MockAPIResponse
 npm run mockAPI
 
 # E2EApplication

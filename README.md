@@ -42,8 +42,6 @@ npm -v
 **3. Install dependencies**  
 ```bash
 npm install
-npm install cypress
-
 ```
 **4. Install Cypress**  
 ```bash

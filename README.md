@@ -44,7 +44,7 @@ cd BarBooks
 ```bash
 npm install cypress
 ```
-**4. Install TypeScript **  
+**4. Install TypeScript**  
 ```bash
 npm install --save-dev typescript @types/node @types/cypress
 ```

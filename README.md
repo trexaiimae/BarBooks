@@ -79,8 +79,12 @@ npx cypress open
 
 **Option 2: Run directly in CLI (headless mode)**  
 ```bash
+
 # Run all Test
 npm run runall
+
+# Run APITestingHeadless
+npm run apiHeadless
 
 # Run MockAPIResponse
 npm run mockAPI

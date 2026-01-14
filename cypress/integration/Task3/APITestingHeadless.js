@@ -43,7 +43,6 @@ describe("API Testing (Headless) - JSONPlaceholder", () => {
     expect(response.body.title).to.not.be.empty;
 
 
-      // Optional: log the response
       cy.log(JSON.stringify(response.body));
     });
   });

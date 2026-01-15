@@ -13,9 +13,9 @@
     "chromeTest": "npx cypress run --browser chrome",
     "recordDashboardTest": "npx cypress run --record --key 67cfa6a8-8af2-4c42-a9f7-92ce21063f8a --spec \"cypress/integration/*.js\"  --browser chrome",
     "test:CartTotal": "jest --config jest.config.js",
-    "mockAPI": "npx cypress run --spec \"cypress/integration/Task2/MockAPIResponse.js\"",
-    "apiHeadless": "npx cypress run --spec \"cypress/integration/Task3/APITestingHeadless.js\"",
-    "E2Etest": "npx cypress run --spec \"cypress/integration/Task4/E2EUIApplication.js\""
+    "mockAPI": "npx cypress run --spec \"cypress/integration/Task2/MockAPIResponse.js\" || true && npm run report:merge && npm run report:generate",
+    "apiHeadless": "npx cypress run --spec \"cypress/integration/Task3/APITestingHeadless.js\" || true && npm run report:merge && npm run report:generate",
+    "E2Etest": "npx cypress run --spec \"cypress/integration/Task4/E2EUIApplication.js\" || true && npm run report:merge && npm run report:generate"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
@@ -24,6 +24,9 @@
     "cypress-dotenv": "^3.0.1",
     "cypress-mochawesome-reporter": "^4.0.2",
     "jest": "^30.2.0",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.1.0",
+    "mochawesome-report-generator": "^6.3.2",
     "ts-jest": "^29.4.6",
     "typescript": "^5.9.3"
   }

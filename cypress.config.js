@@ -16,7 +16,7 @@ module.exports = defineConfig({
   screenshotOnRunFailure: true,
 
   env: {
-    url: "https://www.saucedemo.com/",
+    url: "https://saucedemo.com/",
     apiUrl: "https://jsonplaceholder.typicode.com/posts"
   },
 

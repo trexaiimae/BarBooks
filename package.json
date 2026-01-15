@@ -10,9 +10,10 @@
     "test": "jest",
     "runAll_CI": "npx cypress run",  
     "test:CartTotal": "jest --config jest.config.js",
-    "mockAPI_CI": "npx cypress run --spec \"cypress/integration/Task2/MockAPIResponse.js \" --browser chrome --headless || true && npm run report:merge && npm run report:generate",
-    "apiHeadless_CI": "npx cypress run --spec \"cypress/integration/Task3/APITestingHeadless.js\" --browser chrome --headless || true && npm run report:merge && npm run report:generate",
-    "E2Etest_CI": "npx cypress run --spec \"cypress/integration/Task4/E2EUIApplication.js\" --browser chrome --headless || true && npm run report:merge && npm run report:generate"
+    "mockAPI_CI": "npx cypress run --spec \"cypress/integration/Task2/MockAPIResponse.js\" --browser chrome --headless && npm run report:merge && npm run report:generate",
+    "apiHeadless_CI": "npx cypress run --spec \"cypress/integration/Task3/APITestingHeadless.js\" --browser chrome --headless && npm run report:merge && npm run report:generate",
+    "E2Etest_CI": "npx cypress run --spec \"cypress/integration/Task4/E2EUIApplication.js\" --browser chrome --headless && npm run report:merge && npm run report:generate"
+
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",

@@ -1,14 +1,8 @@
 pipeline {
-    agent {
-        docker { image 'cypress/included:15.9.0' } // use the Cypress version your tests need
-    }
-
-    environment {
-        REPORT_DIR = 'cypress/reports'
-    }
+    agent any
 
     stages {
-        stage('Checkout BarBooks') {
+        stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/trexaiimae/BarBooks.git'
             }
@@ -20,20 +14,20 @@ pipeline {
             }
         }
 
-        stage('Run Cypress Tests') {
+        stage('Run Cypress (Headless)') {
             steps {
-                sh 'npm run runAll_CI'
+                sh 'npx cypress run --headless'
             }
         }
 
-        stage('Merge & Generate Mochawesome Report') {
+        stage('Generate Mochawesome Report') {
             steps {
-                sh 'npm run report:merge'
-                sh 'npm run report:generate'
+                sh 'npm run report:merge || true'
+                sh 'npm run report:generate || true'
             }
         }
 
-        stage('Archive Mochawesome Reports') {
+        stage('Archive Reports') {
             steps {
                 archiveArtifacts artifacts: 'cypress/reports/**/*', allowEmptyArchive: true
             }

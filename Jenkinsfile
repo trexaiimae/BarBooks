@@ -24,13 +24,20 @@ pipeline {
 
         stage('Run Cypress Tests') {
             steps {
-                
-                sh 'xvfb-run -a npx cypress run --headless --project $WORKSPACE'
+                // Run Cypress and fail the build if tests fail
+                sh '''
+                    xvfb-run -a npx cypress run --headless --project $WORKSPACE
+                    if [ $? -ne 0 ]; then
+                        echo "Cypress tests failed"
+                        exit 1
+                    fi
+                '''
             }
         }
-//test
+
         stage('Generate Mochawesome Report') {
             steps {
+                // Don't fail pipeline if report scripts fail
                 sh 'npm run report:merge || true'
                 sh 'npm run report:generate || true'
             }
@@ -46,6 +53,12 @@ pipeline {
     post {
         always {
             echo 'Pipeline finished'
+        }
+        success {
+            echo 'All stages passed!'
+        }
+        failure {
+            echo 'Some stages failed. Deployment stopped!'
         }
     }
 }

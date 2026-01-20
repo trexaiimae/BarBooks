@@ -1,16 +1,13 @@
 pipeline {
-    agent {
-        docker {
-            image 'cypress/base:16'       // Cypress Docker image with Node and dependencies
-            args '-v /dev/shm:/dev/shm'   // Optional: improves Cypress performance
-        }
-    }
-
-    environment {
-        CYPRESS_CACHE_FOLDER = '/root/.cache/Cypress'  // Optional: cache Cypress
-    }
+    agent any
 
     stages {
+        stage('Prepare Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/trexaiimae/BarBooks.git'
@@ -25,8 +22,7 @@ pipeline {
 
         stage('Run Cypress Tests') {
             steps {
-                // Run Cypress headless inside Docker
-                sh 'npx cypress run --headless --project $PWD'
+                sh 'xvfb-run -a npx cypress run --headless --project $WORKSPACE'
             }
         }
 
@@ -39,11 +35,8 @@ pipeline {
 
         stage('Archive Reports and Media') {
             steps {
-                // Archive Mochawesome reports
                 archiveArtifacts artifacts: 'cypress/reports/**/*', allowEmptyArchive: true
-                // Archive screenshots of failed tests
                 archiveArtifacts artifacts: 'cypress/screenshots/**/*', allowEmptyArchive: true
-                // Archive videos of test runs
                 archiveArtifacts artifacts: 'cypress/videos/**/*', allowEmptyArchive: true
             }
         }

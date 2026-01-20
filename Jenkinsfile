@@ -8,22 +8,35 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Build Docker Image') {
             steps {
-                sh 'npm install'
+                script {
+                    // Build Docker image from Dockerfile in project root
+                    docker.build('barbooks-cypress')
+                }
             }
         }
 
-        stage('Run Cypress (Headless)') {
+        stage('Run Cypress Tests') {
             steps {
-                sh 'npx cypress run --headless'
+                script {
+                    // Run the tests inside the Docker container
+                    docker.image('barbooks-cypress').inside {
+                        sh 'npx cypress run --headless'
+                    }
+                }
             }
         }
 
         stage('Generate Mochawesome Report') {
             steps {
-                sh 'npm run report:merge || true'
-                sh 'npm run report:generate || true'
+                script {
+                    docker.image('barbooks-cypress').inside {
+                        // Merge and generate Mochawesome reports
+                        sh 'npm run report:merge || true'
+                        sh 'npm run report:generate || true'
+                    }
+                }
             }
         }
 

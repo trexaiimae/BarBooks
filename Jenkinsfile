@@ -28,7 +28,13 @@ pipeline {
         stage('Run Cypress Tests for BarBooks') {
             steps {
                 // Fail the build if Cypress tests fail
-                sh 'xvfb-run -a npx cypress run --headless --project $CYPRESS_PROJECT || exit 1'
+                sh '''
+                    xvfb-run -a npx cypress run --headless --project $CYPRESS_PROJECT
+                    if [ $? -ne 0 ]; then
+                        echo "Cypress tests failed"
+                        exit 1
+                    fi
+                '''
             }
         }
 
@@ -62,7 +68,7 @@ pipeline {
             echo 'All stages passed!'
         }
         failure {
-            echo 'Some stages failed. deployment stop!'
+            echo 'Some stages failed. Deployment stopped!'
         }
     }
 }

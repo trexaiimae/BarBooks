@@ -1,17 +1,18 @@
 pipeline {
-    agent any  // Run on Jenkins node/container directly
+    agent {
+        docker {
+            image 'cypress/base:16'       // Cypress Docker image with Node and dependencies
+            args '-v /dev/shm:/dev/shm'   // Optional: improves Cypress performance
+        }
+    }
+
+    environment {
+        CYPRESS_CACHE_FOLDER = '/root/.cache/Cypress'  // Optional: cache Cypress
+    }
 
     stages {
-        stage('Prepare Workspace') {
-            steps {
-                // Clean the workspace to avoid permission issues
-                cleanWs()
-            }
-        }
-
         stage('Checkout') {
             steps {
-                // Checkout code after cleaning workspace
                 git branch: 'main', url: 'https://github.com/trexaiimae/BarBooks.git'
             }
         }
@@ -24,8 +25,8 @@ pipeline {
 
         stage('Run Cypress Tests') {
             steps {
-                // Run Cypress headless using xvfb in the Jenkins workspace
-                sh 'xvfb-run -a npx cypress run --headless --project $WORKSPACE'
+                // Run Cypress headless inside Docker
+                sh 'npx cypress run --headless --project $PWD'
             }
         }
 
@@ -36,9 +37,14 @@ pipeline {
             }
         }
 
-        stage('Archive Reports') {
+        stage('Archive Reports and Media') {
             steps {
+                // Archive Mochawesome reports
                 archiveArtifacts artifacts: 'cypress/reports/**/*', allowEmptyArchive: true
+                // Archive screenshots of failed tests
+                archiveArtifacts artifacts: 'cypress/screenshots/**/*', allowEmptyArchive: true
+                // Archive videos of test runs
+                archiveArtifacts artifacts: 'cypress/videos/**/*', allowEmptyArchive: true
             }
         }
     }

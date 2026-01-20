@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'cypress/included:15.9.0' } // use the Cypress version your tests need
+    }
 
     environment {
         REPORT_DIR = 'cypress/reports'
@@ -20,7 +22,6 @@ pipeline {
 
         stage('Run Cypress Tests') {
             steps {
-                // Run all Cypress tests using your npm script
                 sh 'npm run runAll_CI'
             }
         }

@@ -16,7 +16,8 @@ pipeline {
 
         stage('Run Cypress Tests') {
             steps {
-                sh 'npx cypress run --headless'
+                // Use xvfb-run with $WORKSPACE to run headless tests in Jenkins
+                sh 'xvfb-run -a npx cypress run --headless --project $WORKSPACE'
             }
         }
 

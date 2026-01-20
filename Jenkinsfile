@@ -12,15 +12,23 @@ pipeline {
             }
         }
 
-        stage('Run Cypress Tests in Docker') {
+        stage('Install Dependencies') {
             steps {
-                script {
-                    // run everything inside cypress/included docker
-                    docker.image('cypress/included:12.12.0').inside {
-                        sh 'npm install'
-                        sh 'npm run runAll_CI'
-                    }
-                }
+                sh 'npm install'
+            }
+        }
+
+        stage('Run Cypress Tests') {
+            steps {
+                // Run all Cypress tests using your npm script
+                sh 'npm run runAll_CI'
+            }
+        }
+
+        stage('Merge & Generate Mochawesome Report') {
+            steps {
+                sh 'npm run report:merge'
+                sh 'npm run report:generate'
             }
         }
 

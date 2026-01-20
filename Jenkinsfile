@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'cypress/base:18'
-            args '-u root:root' // run as root if needed
-        }
-    }
+    agent any  // Run on Jenkins node/container directly
 
     stages {
         stage('Checkout') {

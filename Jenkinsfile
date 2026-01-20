@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'cypress/included:12.12.0' }
+    }
 
     environment {
         REPORT_DIR = 'cypress/reports'
@@ -18,13 +20,9 @@ pipeline {
             }
         }
 
-        stage('Run Cypress Tests in Docker') {
+        stage('Run Cypress Tests') {
             steps {
-                script {
-                    docker.image('cypress/included:12.12.0').inside {
-                        sh 'npx cypress run --reporter mochawesome --reporter-options reportDir=cypress/reports,overwrite=false,html=true,json=true'
-                    }
-                }
+                sh 'npx cypress run --reporter mochawesome --reporter-options reportDir=cypress/reports,overwrite=false,html=true,json=true'
             }
         }
 

@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'cypress/base:18'
+            args '-u root:root' // optional: run as root if needed
+        }
+    }
 
     stages {
         stage('Checkout') {
@@ -8,35 +13,22 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Install Dependencies') {
             steps {
-                script {
-                    // Build Docker image from Dockerfile in project root
-                    docker.build('barbooks-cypress')
-                }
+                sh 'npm install'
             }
         }
 
         stage('Run Cypress Tests') {
             steps {
-                script {
-                    // Run the tests inside the Docker container
-                    docker.image('barbooks-cypress').inside {
-                        sh 'npx cypress run --headless'
-                    }
-                }
+                sh 'npx cypress run --headless'
             }
         }
 
         stage('Generate Mochawesome Report') {
             steps {
-                script {
-                    docker.image('barbooks-cypress').inside {
-                        // Merge and generate Mochawesome reports
-                        sh 'npm run report:merge || true'
-                        sh 'npm run report:generate || true'
-                    }
-                }
+                sh 'npm run report:merge || true'
+                sh 'npm run report:generate || true'
             }
         }
 

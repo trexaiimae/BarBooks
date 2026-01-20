@@ -1,17 +1,21 @@
 pipeline {
     agent any  // Run on Jenkins node/container directly
 
+    environment {
+        CYPRESS_PROJECT = "${WORKSPACE}"
+    }
+
     stages {
         stage('Prepare Workspace') {
             steps {
-                // Clean the workspace to avoid permission issues
+                // Clean workspace to avoid permission issues
                 cleanWs()
             }
         }
 
         stage('Checkout') {
             steps {
-                // Checkout code after cleaning workspace
+                // Checkout code from GitHub
                 git branch: 'main', url: 'https://github.com/trexaiimae/BarBooks.git'
             }
         }
@@ -24,9 +28,9 @@ pipeline {
 
         stage('Run Cypress Tests') {
             steps {
-                // Run Cypress and fail the build if tests fail
+                // Run Cypress headless inside Xvfb and fail if tests fail
                 sh '''
-                    xvfb-run -a npx cypress run --headless --project $WORKSPACE
+                    xvfb-run -a npx cypress run --headless --project $CYPRESS_PROJECT
                     if [ $? -ne 0 ]; then
                         echo "Cypress tests failed"
                         exit 1
@@ -37,7 +41,7 @@ pipeline {
 
         stage('Generate Mochawesome Report') {
             steps {
-                // Don't fail pipeline if report scripts fail
+                // Merge and generate reports, do not fail if these fail
                 sh 'npm run report:merge || true'
                 sh 'npm run report:generate || true'
             }
@@ -46,6 +50,8 @@ pipeline {
         stage('Archive Reports') {
             steps {
                 archiveArtifacts artifacts: 'cypress/reports/**/*', allowEmptyArchive: true
+                archiveArtifacts artifacts: 'cypress/screenshots/**/*', allowEmptyArchive: true
+                archiveArtifacts artifacts: 'cypress/videos/**/*', allowEmptyArchive: true
             }
         }
     }

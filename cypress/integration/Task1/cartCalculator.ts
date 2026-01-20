@@ -1,12 +1,30 @@
-export type CartItems= { product: string; price: string | number; qty: number };
+export type CartItem = { product: string; price: string | number; qty: number };
 
+/**
+ * Calculates the total price of items in the cart.
+ * @param items - Array of cart items with product, price, and quantity.
+ * @returns The total price rounded to 2 decimal places.
+ */
+export function calculateCartTotal(items: CartItem[]): number {
+  if (!Array.isArray(items)) {
+    throw new Error('Items must be an array');
+  }
 
+  const total = items.reduce((sum, { price, qty }) => {
+    if (qty < 0) {
+      throw new Error('Quantity cannot be negative');
+    }
 
-export function calculateCartTotal(items: CartItems[]): number {
-  const total = items.reduce((sum, { price, qty = 0 }) => {
-    const parsedPrice = Number(String(price).replace(/[^0-9.]/g, '')) || 0;
+    const parsedPrice = parseFloat(String(price).replace(/[^0-9.-]/g, ''));
+
+    if (isNaN(parsedPrice)) {
+      throw new Error(`Invalid price for product: ${price}`);
+    }
+
     return sum + parsedPrice * qty;
   }, 0);
 
-  return Math.round(total * 100) / 100; // round to 2 decimals
+  // Use toFixed for precise decimal rounding to avoid floating-point issues
+  return parseFloat(total.toFixed(2));
 }
+

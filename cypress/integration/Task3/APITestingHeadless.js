@@ -10,7 +10,8 @@ describe("API Testing (Headless) - JSONPlaceholder", () => {
       method: "POST", url: apiUrl, body: payload,
       headers: { "Content-type": "application/json; charset=UTF-8" },
     }).then((response) => {
-     
+      
+      cy.log(JSON.stringify(response.body));
       expect(response.status).to.eq(201);
       expect(response.body).to.have.property("id");
 

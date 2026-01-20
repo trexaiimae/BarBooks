@@ -12,8 +12,9 @@ class InventoryPage {
 
       // extract prices and index
       const pricesWithIndex = [...items].map((item, index) => {
-        const priceText = item.querySelector(".inventory_item_price").innerText;
-        const price = parseFloat(priceText.replace("$", ""));
+        const priceText = item.querySelector(".inventory_item_price").innerText; 
+        // const price = parseFloat(priceText.replace("$", ""));
+        const price = parseFloat(priceText.replace(/[^0-9.]/g, ""));
         return { price, index };
       });
 

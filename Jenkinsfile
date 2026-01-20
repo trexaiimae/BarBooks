@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'cypress/base:18'
-            args '-u root:root' // optional: run as root if needed
+            args '-u root:root' // run as root if needed
         }
     }
 
